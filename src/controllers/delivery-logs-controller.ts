@@ -55,6 +55,10 @@ class DeliveryLogsController {
             }
         })
 
+        if(!delivery) {
+            return response.status(404).json({ message: "delivery not found."})
+        }
+
         // Cada usuário deverá verificar sua entrega
         if(request.user?.role === "customer" && request.user.id !== delivery?.userId) {
             throw new AppError("Unauthorized! The user can only view their deliveries", 401)
